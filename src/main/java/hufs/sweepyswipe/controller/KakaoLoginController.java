@@ -47,7 +47,7 @@ public class KakaoLoginController {
 
         //세션에 로그인 정보 저장
         Member member = memberService.login(kakaoId);
-        session.setAttribute("member", member);
+        session.setAttribute("loginMember", member);
         log.info("save to session");
 
         return new ResponseEntity<>(HttpStatus.OK);
