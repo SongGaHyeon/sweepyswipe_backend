@@ -20,16 +20,35 @@ public class MemberService {
     //회원가입
     @Transactional(readOnly = false)
     public Long join(Member member) {
-        validateDuplicateMember(member);
+        //validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
     }
 
+    public boolean isMemberExist(Long id) {
+        Member findMember = memberRepository.findOne(id);
+        return findMember != null;
+    }
+
+    /*
     private void validateDuplicateMember(Member member) {
+        Member findMember = memberRepository.findOne(member.getId());
+        if(findMember != null) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
+
         List<Member> findMembers = memberRepository.findByName(member.getName());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+
+    }
+     */
+
+    @Transactional(readOnly = false)
+    public Member login(Long id) {
+        Member member = memberRepository.findOne(id);
+        return member;
     }
 
 }
