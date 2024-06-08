@@ -4,6 +4,7 @@ import hufs.sweepyswipe.domain.Member;
 import hufs.sweepyswipe.service.KakaoService;
 import hufs.sweepyswipe.service.KakaoUserInfoResponseDto;
 import hufs.sweepyswipe.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class KakaoLoginController {
     private final MemberService memberService;
 
     @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code, HttpSession session) throws IOException {
+    public void callback(@RequestParam("code") String code, HttpSession session, HttpServletResponse response) throws IOException {
         String accessToken = kakaoService.getAccessTokenFromKakao(code);
 
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
@@ -50,6 +51,7 @@ public class KakaoLoginController {
         session.setAttribute("loginMember", member);
         log.info("save to session");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        //홈 페이지로 리디렉션
+        response.sendRedirect("/");
     }
 }
