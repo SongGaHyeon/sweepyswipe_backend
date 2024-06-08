@@ -37,6 +37,8 @@ dependencies {
 
 	//Webflux
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'javax.mail:mail:1.6.2'
 }
 
 tasks.named('test') {

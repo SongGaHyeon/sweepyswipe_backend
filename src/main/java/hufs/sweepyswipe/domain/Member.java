@@ -11,6 +11,6 @@ public class Member {
     @Id
     @Column(name = "member_id")
     private Long id;
-
     private String name;
+    private String email;
 }
