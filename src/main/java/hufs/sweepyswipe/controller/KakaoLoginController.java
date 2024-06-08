@@ -36,12 +36,14 @@ public class KakaoLoginController {
 
         Long kakaoId = userInfo.getId();
         String nickName = userInfo.getKakaoAccount().getProfile().getNickName();
+        String email = userInfo.getKakaoAccount().getEmail();
 
         if (!memberService.isMemberExist(kakaoId)) {
             //회원가입
             Member newMember = new Member();
             newMember.setId(kakaoId);
             newMember.setName(nickName);
+            newMember.setEmail(email);
             memberService.join(newMember);
             log.info("join");
         }
