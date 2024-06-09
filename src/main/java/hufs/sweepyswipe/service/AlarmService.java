@@ -41,8 +41,8 @@ public class AlarmService {
     private void sendEmail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
-        message.setSubject("제목없음");
-        message.setText("Test");
+        message.setSubject("알림메일");
+        message.setText("쓰레기 배출 시간입니다.");
         emailSender.send(message);
         log.info("send message : {}", message);
     }

@@ -36,8 +36,6 @@ public class AlarmSettingsController {
     @PostMapping
     @Transactional
     public String updateAlarmSettings(HttpServletRequest request, @ModelAttribute("member") Member member) {
-
-        log.info("get time {} : ", member.getTime());
         HttpSession session = request.getSession();
         Member sessionMember = (Member) session.getAttribute("loginMember");
 
