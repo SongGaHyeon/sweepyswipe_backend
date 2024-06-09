@@ -2,7 +2,6 @@ package hufs.sweepyswipe.repository;
 
 import hufs.sweepyswipe.domain.Member;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
