@@ -11,8 +11,9 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/mail")
-    public String mail() {
-        return "contact";
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
     }
+
 }
