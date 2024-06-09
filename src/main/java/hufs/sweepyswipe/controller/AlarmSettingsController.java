@@ -36,28 +36,22 @@ public class AlarmSettingsController {
     @PostMapping
     @Transactional
     public String updateAlarmSettings(HttpServletRequest request, @ModelAttribute("member") Member member) {
+
+        log.info("get time {} : ", member.getTime());
         HttpSession session = request.getSession();
         Member sessionMember = (Member) session.getAttribute("loginMember");
 
-        memberRepository.save(member);
+        Member existingMember = memberRepository.findOne(sessionMember.getId());
 
-        session.setAttribute("loginMember", member);
-
-        return "redirect:/members/alarm";
-
-        /*
-
-        Member existingMember = memberRepository.findOne(member.getId());
         existingMember.setEnabled(member.isEnabled());
         existingMember.setDayOfWeek(member.getDayOfWeek());
-        log.info("DayOfWeek : {}", member.getDayOfWeek());
         existingMember.setTime(member.getTime());
 
-        memberRepository.save(existingMember);
+        //memberRepository.save(existingMember);
 
         session.setAttribute("loginMember", existingMember);
 
-        return "alarmSettings";
-        */
+        return "redirect:/members/alarm";
+
     }
 }
