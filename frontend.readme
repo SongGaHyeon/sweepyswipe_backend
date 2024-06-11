@@ -1,0 +1,67 @@
+1. Tuning된 chatgpt 키는 공란으로 비워놓았습니다 
+
+*주의해주세요
+(Git commit 시 api 키 노출로 정지 - 저희가 마지막 발표 때 채워넣으면 될 것 같아 프론트 작업 후, 올려주실때도 공란으로 두시면 될 것 같습니다)
+테스트를 위해 API KEY가 필요하실 경우, 요청해주시면 단톡방을 통해 공유드리겠습니다.
+
+ChatGpt API KEY가 쓰인 부분은 다음과 같습니다.
+- Service 폴더의 ChatGptService 중 private static final String API_KEY 부분에 대한 초기화 (intellij의 configuration 설정->Environment에 key값 설정)
+- 같은 파일의
+    ChatGptRequestDto request = ChatGptRequestDto.builder()
+                .model("튜닝된 키가 들어가는 부분")
+
+
+2. 프론트엔드에서 입력된 사용자의 질문을 백엔드에서 받아, 응답을 다시 프론트엔드로 전송하는 과정을 거칩니다.
+WebConfig.java 가 이를 실질적으로 담당하며, 이 부분이 CORS 설정입니다
+(특정 도메인에서 오는 요청을 허용하여 프론트엔드와 백엔드 간의 통신을 원활하게 하는 부분)
+
+프론트엔드에서 아래의 코드를 참고하여 작성하면 될 것 같습니다. 
+
+
+'''
+import React, { useState } from 'react';
+import axios from 'axios';
+
+function App() {
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:9090/api/v1/chat/question', {
+        question: question
+      });
+      setAnswer(response.data.choices[0].message.content);
+    } catch (error) {
+      console.error('Error fetching the response:', error);
+    }
+  };
+
+  return (
+    <div className="App">
+      <h1>ChatGPT Chatbot</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask a question..."
+        />
+        <button type="submit">Ask</button>
+      </form>
+      {answer && <p>Answer: {answer}</p>}
+    </div>
+  );
+}
+
+export default App;
+
+
+'''
+
+
+일단 백엔드 코드에서 3030 포트 (프론트)를 통해 가져오는 것으로 하였는데 사용하시는 포트에 맞게 수정해주시면 될 듯합니다.
+
+
+
